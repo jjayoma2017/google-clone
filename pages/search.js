@@ -1,25 +1,29 @@
-import Head from 'next/head'
-import SearchHeader from '../components/SearchHeader'
-import Response from '../Response'
+import Head from 'next/head';
+import SearchHeader from '../components/SearchHeader';
+import SearchResults from '../components/SearchResults';
+import Response from '../Response';
+import { useRouter } from 'next/router';
 
-export default function search({ results }) {
-  console.log(results)
+export default function Search({ results }) {
+  console.log(results);
+  const router = useRouter();
   return (
     <div>
       <Head>
-        <title>Search Page</title>
+        <title>{router.query.term} - Search page</title>
       </Head>
 
       {/* Search Header */}
       <SearchHeader />
 
       {/* Search Results */}
+      <SearchResults results={results} />
     </div>
-  )
+  );
 }
 
 export const getServerSideProps = async (context) => {
-  const mockData = true
+  const mockData = true;
   const data = mockData
     ? Response
     : await fetch(
@@ -27,11 +31,11 @@ export const getServerSideProps = async (context) => {
           process.env.API_KEY
         }&cx=${process.env.CONTEXT_KEY}&q=${context.query.term}${
           context.query.searchType && '&searchType=image'
-        }`,
-      ).then((response) => response.json())
+        }`
+      ).then((response) => response.json());
   return {
     props: {
       results: data,
     },
-  }
-}
+  };
+};

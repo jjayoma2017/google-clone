@@ -1,20 +1,20 @@
 /* eslint-disable jsx-a11y/alt-text */
-import Image from 'next/image'
-import { useRouter } from 'next/router'
-import { useRef } from 'react'
-import { MicrophoneIcon, SearchIcon, XIcon } from '@heroicons/react/solid'
-import User from './User'
-import SearchHeaderOptions from './SearchHeaderOptions'
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useRef } from 'react';
+import { MicrophoneIcon, SearchIcon, XIcon } from '@heroicons/react/solid';
+import User from './User';
+import SearchHeaderOptions from './SearchHeaderOptions';
 
 export default function SearchHeader() {
-  const router = useRouter()
-  const searchInputRef = useRef(null)
+  const router = useRouter();
+  const searchInputRef = useRef(null);
   const search = (event) => {
-    event.preventDefault()
-    const term = searchInputRef.current.value
-    if (!term.trim()) return
-    router.push(`/search?term=${term.trim()}&searchType=`)
-  }
+    event.preventDefault();
+    const term = searchInputRef.current.value;
+    if (!term.trim()) return;
+    router.push(`/search?term=${term.trim()}&searchType=`);
+  };
   return (
     <header className="sticky top-0 bg-white">
       <div className="flex w-full p-6 items-center">
@@ -39,11 +39,11 @@ export default function SearchHeader() {
           />
           <MicrophoneIcon className="h-6 hidden sm:inline-flex text-blue-500 pl-4 border-l-2 border-gray-300 mr-3" />
           <SearchIcon className="h-6 hidden sm:inline-flex text-blue-500" />
-          <button type="submit" hidden onClick={search}></button>
+          <button type="submit" onClick={search}></button>
         </form>
         <User className="ml-auto whitespace-nowrap" />
       </div>
       <SearchHeaderOptions />
     </header>
-  )
+  );
 }
