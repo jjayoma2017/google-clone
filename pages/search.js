@@ -1,8 +1,8 @@
-import Head from 'next/head';
-import SearchHeader from '../components/SearchHeader';
-import SearchResults from '../components/SearchResults';
-import Response from '../Response';
-import { useRouter } from 'next/router';
+import Head from "next/head";
+import SearchHeader from "../components/SearchHeader";
+import SearchResults from "../components/SearchResults";
+import Response from "../Response";
+import { useRouter } from "next/router";
 
 export default function Search({ results }) {
   console.log(results);
@@ -23,15 +23,16 @@ export default function Search({ results }) {
 }
 
 export const getServerSideProps = async (context) => {
-  const mockData = true;
+  const mockData = false;
+  const startIndex = context.query.start || "1";
   const data = mockData
     ? Response
     : await fetch(
         `https://www.googleapis.com/customsearch/v1?key=${
           process.env.API_KEY
         }&cx=${process.env.CONTEXT_KEY}&q=${context.query.term}${
-          context.query.searchType && '&searchType=image'
-        }`
+          context.query.searchType && "&searchType=image"
+        }&start=${startIndex}`
       ).then((response) => response.json());
   return {
     props: {
