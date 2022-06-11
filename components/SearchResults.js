@@ -1,6 +1,6 @@
-import React from "react";
-import Parser from "html-react-parser";
-import PaginationButtons from "./PaginationButtons";
+import React from 'react';
+import Parser from 'html-react-parser';
+import PaginationButtons from './PaginationButtons';
 
 export default function SearchResults({ results }) {
   return (

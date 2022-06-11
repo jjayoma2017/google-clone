@@ -1,22 +1,32 @@
 /* eslint-disable jsx-a11y/alt-text */
-import Head from 'next/head'
-import Image from 'next/image'
-import Header from '../components/Header'
-import { SearchIcon, MicrophoneIcon } from '@heroicons/react/solid'
-import Footer from '../components/Footer'
-import { useRouter } from 'next/router'
-import { useRef } from 'react'
+import Head from 'next/head';
+import Image from 'next/image';
+import Header from '../components/Header';
+import { SearchIcon, MicrophoneIcon } from '@heroicons/react/solid';
+import Footer from '../components/Footer';
+import { useRouter } from 'next/router';
+import { useRef } from 'react';
 
 export default function Home() {
-  const router = useRouter()
-  const searctInputRef = useRef(null)
+  const router = useRouter();
+  const searctInputRef = useRef(null);
   const search = (event) => {
-    event.preventDefault()
-    const term = searctInputRef.current.value
-    if (!term.trim()) return
+    event.preventDefault();
+    const term = searctInputRef.current.value;
+    if (!term.trim()) return;
 
-    router.push(`/search?term=${term.trim()}&searchType=`)
-  }
+    router.push(`/search?term=${term.trim()}&searchType=`);
+  };
+
+  const randomSearch = async (event) => {
+    event.preventDefault();
+    const randomTerm = await fetch(
+      'https://random-word-api.herokuapp.com/word?number=1'
+    ).then((response) => response.json());
+    if (!randomTerm) return;
+
+    router.push(`/search?term=${randomTerm}&searchType=`);
+  };
 
   return (
     <div>
@@ -49,11 +59,13 @@ export default function Home() {
           <button className="btn" onClick={search}>
             Google Search
           </button>
-          <button className="btn">I'm Feeling Lucky</button>
+          <button className="btn" onClick={randomSearch}>
+            I&apos;m Feeling Lucky
+          </button>
         </div>
       </form>
       {/* Footer */}
       <Footer />
     </div>
-  )
+  );
 }
